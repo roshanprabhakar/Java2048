@@ -6,7 +6,7 @@ public class Board {
     public static final int columns = 4;
 
     int[][] board = new int[columns][rows];
-    public final int[] initChoices = new int[]{2, 4};
+    private final int[] initChoices = new int[]{2, 4};
 
     public Board() {
         int x1 = (int) (Math.random() * columns);
