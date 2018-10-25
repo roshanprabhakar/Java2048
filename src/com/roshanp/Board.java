@@ -93,11 +93,13 @@ public class Board {
         }
     }
 
-    public void rightShift() {
-        moveAllRight();
+    public void leftShift() {
+        moveAllLeft();
+        addLeft();
+        moveAllLeft();
     }
 
-    private void moveAllRight() {
+    private void moveAllLeft() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (board[i][j] == 0) {
@@ -111,6 +113,51 @@ public class Board {
             }
         }
     }
+
+
+    private void addLeft() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns - 1; j++) {
+                if (board[i][j] == board[i][j + 1]) {
+                    board[i][j] += board[i][j];
+                    board[i][j + 1] = 0;
+                }
+            }
+        }
+    }
+
+    public void rightShift() {
+        moveAllRight();
+        addRight();
+        moveAllRight();
+    }
+
+    private void moveAllRight() {
+        for (int i = rows - 1; i >= 0; i--) {
+            for (int j = columns - 1; j >= 0; j--) {
+                if (board[i][j] == 0) {
+                    for (int k = j; k >= 0; k--) {
+                        if (board[i][k] != 0) {
+                            swap(i, j, i, k);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void addRight() {
+        for (int i = rows - 1; i >= 0; i--) {
+            for (int j = columns - 1; j >= 1; j--) {
+                if (board[i][j] == board[i][j - 1]) {
+                    board[i][j] += board[i][j];
+                    board[i][j - 1] = 0;
+                }
+            }
+        }
+    }
+
 
     private void swap(int i1, int j1, int i2, int j2) {
         int temp = board[i1][j1];
