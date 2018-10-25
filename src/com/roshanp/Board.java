@@ -11,17 +11,17 @@ public class Board {
     public Board() {
         int x1 = (int) (Math.random() * columns);
         int y1 = (int) (Math.random() * rows);
-        board[x1][y1] = initChoices[(int) (Math.random() * 2)];
 
         int x2 = (int) (Math.random() * columns);
         int y2 = (int) (Math.random() * rows);
 
-        while (x2 != x1 || y2 != y1) {
+        while (x2 != x1 && y2 != y1) {
             x2 = (int) (Math.random() * columns);
             y2 = (int) (Math.random() * rows);
         }
 
-        board[(int) (Math.random() * columns)][(int) (Math.random() * rows)] = initChoices[(int) (Math.random() * 2)];
+        board[x2][y2] = initChoices[(int) (Math.random() * 2)];
+        board[x1][y1] = initChoices[(int) (Math.random() * 2)];
     }
 
     //upwards action
@@ -114,7 +114,6 @@ public class Board {
         }
     }
 
-
     private void addLeft() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns - 1; j++) {
@@ -158,11 +157,31 @@ public class Board {
         }
     }
 
+    public void spawnRandom() {
+        int x = (int) (Math.random() * columns);
+        int y = (int) (Math.random() * rows);
+        while (board[x][y] != 0) {
+            x = (int) (Math.random() * columns);
+            y = (int) (Math.random() * rows);
+        }
+        board[x][y] = initChoices[(int) Math.random() * 2];
+    }
 
     private void swap(int i1, int j1, int i2, int j2) {
         int temp = board[i1][j1];
         board[i1][j1] = board[i2][j2];
         board[i2][j2] = temp;
+    }
+
+    public boolean winner(int winningValue) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (board[i][j] == winningValue) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public void display() {
