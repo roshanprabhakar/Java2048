@@ -6,7 +6,7 @@ public class Main {
 	    Board board = new Board();
 	    board.display();
 	    System.out.println();
-	    board.upShift();
+	    board.rightShift();
 	    board.display();
     }
 }
