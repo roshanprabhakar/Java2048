@@ -191,19 +191,6 @@ public class Board {
         board[i2][j2] = temp;
     }
 
-    public void unusable() {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                if (board[i][j] != 0) {
-                    System.out.print(board[i][j] + " " /* + ", (i = " + i + ", j = " + j + ") "*/);
-                } else {
-                    System.out.print(". ");
-                }
-            }
-            System.out.println();
-        }
-    }
-
     public void display() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
