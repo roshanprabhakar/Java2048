@@ -5,15 +5,15 @@ import java.util.Scanner;
 public class Main {
 
     public static Board board = new Board();
-    public static final int winning_value = 64;
+    public static final int winningValue = 2048;
 
     public static void main(String[] args) {
-        System.out.println("Welcome to " + winning_value + "!");
+        System.out.println("Welcome to " + winningValue + "!");
         board.display();
-        while (!board.winner(64)) {
+        while (!board.winner(winningValue)) {
             playerTurn();
         }
-        System.out.println("You won " + winning_value + "!");
+        System.out.println("You won " + winningValue + "!");
     }
 
     public static void playerTurn() {
