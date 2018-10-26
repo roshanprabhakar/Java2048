@@ -24,12 +24,6 @@ public class Board {
         board[x1][y1] = initChoices[(int) (Math.random() * 2)];
     }
 
-    //upwards action
-    public void upShift() {
-        moveAllUp();
-        addUp();
-        moveAllUp(); //edge-case: three alike in a column with one space
-    }
 
     private void moveAllUp() {
         for (int i = 0; i < rows; i++) {
@@ -38,6 +32,51 @@ public class Board {
                     for (int k = i; k < rows; k++) {
                         if (board[k][j] != 0) {
                             swap(k, j, i, j);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void moveAllDown() {
+        for (int i = rows - 1; i >= 0; i--) {
+            for (int j = columns - 1; j >= 0; j--) {
+                if (board[i][j] == 0) {
+                    for (int k = i; k >= 0; k--) {
+                        if (board[k][j] != 0) {
+                            swap(k, j, i, j);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void moveAllLeft() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (board[i][j] == 0) {
+                    for (int k = j; k < columns; k++) {
+                        if (board[i][k] != 0) {
+                            swap(i, j, i, k);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void moveAllRight() {
+        for (int i = rows - 1; i >= 0; i--) {
+            for (int j = columns - 1; j >= 0; j--) {
+                if (board[i][j] == 0) {
+                    for (int k = j; k >= 0; k--) {
+                        if (board[i][k] != 0) {
+                            swap(i, j, i, k);
                             break;
                         }
                     }
@@ -60,27 +99,6 @@ public class Board {
         moveAllUp();
     }
 
-    //downwards action
-    public void downShift() {
-        moveAllDown();
-        addDown();
-        moveAllDown();
-    }
-
-    private void moveAllDown() {
-        for (int i = rows - 1; i >= 0; i--) {
-            for (int j = columns - 1; j >= 0; j--) {
-                if (board[i][j] == 0) {
-                    for (int k = i; k >= 0; k--) {
-                        if (board[k][j] != 0) {
-                            swap(k, j, i, j);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     private void addDown() {
         for (int i = rows - 1; i > 0; i--) {
@@ -91,27 +109,7 @@ public class Board {
                 }
             }
         }
-    }
-
-    public void leftShift() {
-        moveAllLeft();
-        addLeft();
-        moveAllLeft();
-    }
-
-    private void moveAllLeft() {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                if (board[i][j] == 0) {
-                    for (int k = j; k < columns; k++) {
-                        if (board[i][k] != 0) {
-                            swap(i, j, i, k);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
+        moveAllDown();
     }
 
     private void addLeft() {
@@ -123,27 +121,7 @@ public class Board {
                 }
             }
         }
-    }
-
-    public void rightShift() {
-        moveAllRight();
-        addRight();
-        moveAllRight();
-    }
-
-    private void moveAllRight() {
-        for (int i = rows - 1; i >= 0; i--) {
-            for (int j = columns - 1; j >= 0; j--) {
-                if (board[i][j] == 0) {
-                    for (int k = j; k >= 0; k--) {
-                        if (board[i][k] != 0) {
-                            swap(i, j, i, k);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
+        moveAllLeft();
     }
 
     private void addRight() {
@@ -155,6 +133,46 @@ public class Board {
                 }
             }
         }
+        moveAllRight();
+    }
+
+    //upwards action
+    public void upShift() {
+        moveAllUp();
+        addUp();
+        moveAllUp(); //edge-case: three alike in a column with one space
+    }
+
+    //downwards action
+    public void downShift() {
+        moveAllDown();
+        addDown();
+        moveAllDown();
+    }
+
+    //leftwards action
+    public void leftShift() {
+        moveAllLeft();
+        addLeft();
+        moveAllLeft();
+    }
+
+    //rightwards action
+    public void rightShift() {
+        moveAllRight();
+        addRight();
+        moveAllRight();
+    }
+
+    public boolean winner(int winningValue) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (board[i][j] == winningValue) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public void spawnRandom() {
@@ -173,24 +191,29 @@ public class Board {
         board[i2][j2] = temp;
     }
 
-    public boolean winner(int winningValue) {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                if (board[i][j] == winningValue) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public void display() {
+    public void unusable() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (board[i][j] != 0) {
                     System.out.print(board[i][j] + " " /* + ", (i = " + i + ", j = " + j + ") "*/);
                 } else {
                     System.out.print(". ");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    public void display() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (board[i][j] == 0) {
+                    System.out.print(".");
+                } else {
+                    System.out.print(board[i][j]);
+                }
+                for (int x = 0; x < 5 - Integer.toString(board[i][j]).length(); x++) {
+                    System.out.print(" ");
                 }
             }
             System.out.println();
