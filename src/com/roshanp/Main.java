@@ -25,20 +25,29 @@ public class Main {
 
         if (playerChoice.equals("w")) {
             board.upShift();
+            board.spawnRandom();
+
         } else if (playerChoice.equals("s")) {
             board.downShift();
+            board.spawnRandom();
+
         } else if (playerChoice.equals("a")) {
             board.leftShift();
+            board.spawnRandom();
+
         } else if (playerChoice.equals("d")) {
             board.rightShift();
+            board.spawnRandom();
+
         } else if (playerChoice.equals("display")) {
             board.display();
+            board.spawnRandom();
+
             return;
         } else {
             System.out.println("not a valid move (w, a, s, d, and display are valid)");
             return;
         }
-        board.spawnRandom();
         board.display();
     }
 }
